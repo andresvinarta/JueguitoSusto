@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Convertir el input de movimiento en una dirección
         Vector3 moveDirection = new Vector3(moveInput.x, 0f, moveInput.y);
+        moveDirection = Vector3.Normalize(transform.forward * moveInput.y + transform.right * moveInput.x);
         // Aplicar la velocidad y el movimiento al Rigidbody
         if (moveDirection != Vector3.zero)
         {

@@ -6,6 +6,7 @@ public class PolaroidCamera : MonoBehaviour
     public RenderTexture renderTexture; // RenderTexture asignada a la cámara
     public GameObject photoPrefab; // Prefab que representa la foto impresa en el mundo del juego
     public Transform spawnPoint; // Punto donde aparecerá la foto "impresa"
+    GameObject printedPhoto;
 
     void Update()
     {
@@ -29,8 +30,13 @@ public class PolaroidCamera : MonoBehaviour
         RenderTexture.active = null;
 
         // Instanciar la "foto impresa" en el mundo del juego
-        GameObject printedPhoto = Instantiate(photoPrefab, spawnPoint.position, spawnPoint.rotation);
-        printedPhoto.transform.Rotate(new Vector3(-90, 180, 0));
+        if (printedPhoto != null)
+        {
+            Destroy(printedPhoto );
+        }
+        printedPhoto = Instantiate(photoPrefab, spawnPoint.position, spawnPoint.rotation);
+        printedPhoto.transform.Rotate(new Vector3(0, 180, 0));
+        printedPhoto.transform.Rotate(new Vector3(90, 0, 0));
         printedPhoto.GetComponent<Renderer>().material.mainTexture = photoTexture;
 
         // Desactiva la cámara después de capturar la imagen
