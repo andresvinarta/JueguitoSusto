@@ -30,7 +30,7 @@ public class PolaroidCamera : MonoBehaviour
 
         // Instanciar la "foto impresa" en el mundo del juego
         GameObject printedPhoto = Instantiate(photoPrefab, spawnPoint.position, spawnPoint.rotation);
-        printedPhoto.transform.Rotate(new Vector3(-90, 0 , 0));
+        printedPhoto.transform.Rotate(new Vector3(-90, 180, 0));
         printedPhoto.GetComponent<Renderer>().material.mainTexture = photoTexture;
 
         // Desactiva la cámara después de capturar la imagen
