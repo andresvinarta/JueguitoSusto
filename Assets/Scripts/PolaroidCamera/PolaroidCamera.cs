@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PolaroidCamera : MonoBehaviour
 {
@@ -7,16 +8,18 @@ public class PolaroidCamera : MonoBehaviour
     public GameObject photoPrefab; // Prefab que representa la foto impresa en el mundo del juego
     public Transform spawnPoint; // Punto donde aparecerá la foto "impresa"
     GameObject printedPhoto;
+    public GameObject PictureManagerx;
+    int PhotosTaken = 0;
+    private InputSystem_Actions PlayerInput;
 
-    void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // Si presionas la barra espaciadora, tomas la foto
-        {
-            TakePicture();
-        }
+        PlayerInput = new InputSystem_Actions();
+        PlayerInput.Enable();
+        PlayerInput.Player.TakePicture.performed += TakePicture;
     }
 
-    void TakePicture()
+    void TakePicture(InputAction.CallbackContext context)
     {
         // Activa la cámara Polaroid (si está desactivada)
         polaroidCamera.enabled = true;
@@ -32,12 +35,18 @@ public class PolaroidCamera : MonoBehaviour
         // Instanciar la "foto impresa" en el mundo del juego
         if (printedPhoto != null)
         {
-            Destroy(printedPhoto );
+            //Destroy(printedPhoto );
         }
         printedPhoto = Instantiate(photoPrefab, spawnPoint.position, spawnPoint.rotation);
+        //PhotosTaken++;
+        //printedPhoto.GetComponent<Material>().SetFloat("Smoothness", 0);
         printedPhoto.transform.Rotate(new Vector3(0, 180, 0));
         printedPhoto.transform.Rotate(new Vector3(90, 0, 0));
         printedPhoto.GetComponent<Renderer>().material.mainTexture = photoTexture;
+        PictureManagerx.GetComponent<PictureManager> ().AddPicture(printedPhoto);
+        printedPhoto.transform.SetParent(PictureManagerx.transform);
+        printedPhoto.layer = LayerMask.NameToLayer("UI");
+        //printedPhoto.SetActive(false);
 
         // Desactiva la cámara después de capturar la imagen
         polaroidCamera.enabled = false;

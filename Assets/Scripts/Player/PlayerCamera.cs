@@ -45,7 +45,6 @@ public class PlayerCamera : MonoBehaviour
 
         // Aplicar la rotación de la cámara en el eje X
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
         // Rotar el jugador en el eje Y (horizontal) para que siga al ratón
         player.Rotate(Vector3.up * mouseX);
     }
