@@ -13,6 +13,8 @@ public class PlayerCamera : MonoBehaviour
 
     private InputSystem_Actions PlayerInput;
 
+    public GameObject PictureManagerCam;
+
     private void Start()
     {
         //// Bloquear el cursor al iniciar el juego (opcional)
@@ -30,7 +32,10 @@ public class PlayerCamera : MonoBehaviour
     {
         // Rotar la cámara
         lookInput = PlayerInput.Player.Look.ReadValue<Vector2>();
-        RotateCamera();
+        if (!PictureManagerCam.GetComponent<PictureManager>().IsShowing())
+        {
+            RotateCamera();
+        }
     }
 
     private void RotateCamera()

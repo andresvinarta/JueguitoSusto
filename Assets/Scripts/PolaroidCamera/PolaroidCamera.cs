@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,20 +10,26 @@ public class PolaroidCamera : MonoBehaviour
     public Transform spawnPoint; // Punto donde aparecerá la foto "impresa"
     GameObject printedPhoto;
     public GameObject PictureManagerx;
-    int PhotosTaken = 0;
     private InputSystem_Actions PlayerInput;
+    private bool TakingPicture = false;
 
     private void Awake()
     {
+        polaroidCamera.enabled = false;
         PlayerInput = new InputSystem_Actions();
         PlayerInput.Enable();
         PlayerInput.Player.TakePicture.performed += TakePicture;
     }
 
-    void TakePicture(InputAction.CallbackContext context)
+    public void TakePicture(InputAction.CallbackContext context)
     {
+        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture) return;
+
+
         // Activa la cámara Polaroid (si está desactivada)
         polaroidCamera.enabled = true;
+
+        StartCoroutine(ExecuteAfterTime(1.5f));
 
         // Captura la imagen como una textura
         Texture2D photoTexture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
@@ -32,23 +39,37 @@ public class PolaroidCamera : MonoBehaviour
         photoTexture.Apply();
         RenderTexture.active = null;
 
-        // Instanciar la "foto impresa" en el mundo del juego
-        if (printedPhoto != null)
-        {
-            //Destroy(printedPhoto );
-        }
         printedPhoto = Instantiate(photoPrefab, spawnPoint.position, spawnPoint.rotation);
-        //PhotosTaken++;
-        //printedPhoto.GetComponent<Material>().SetFloat("Smoothness", 0);
         printedPhoto.transform.Rotate(new Vector3(0, 180, 0));
         printedPhoto.transform.Rotate(new Vector3(90, 0, 0));
         printedPhoto.GetComponent<Renderer>().material.mainTexture = photoTexture;
-        PictureManagerx.GetComponent<PictureManager> ().AddPicture(printedPhoto);
-        printedPhoto.transform.SetParent(PictureManagerx.transform);
+        PictureManagerx.GetComponent<PictureManager>().AddPicture(printedPhoto);
         printedPhoto.layer = LayerMask.NameToLayer("UI");
-        //printedPhoto.SetActive(false);
+        printedPhoto.SetActive(false);
+
+        PictureManagerx.GetComponent<PictureManager>().JustTookAPicture();
 
         // Desactiva la cámara después de capturar la imagen
         polaroidCamera.enabled = false;
+    }
+
+    IEnumerator ExecuteAfterTime(float time)
+    {
+        if (TakingPicture)
+        {
+            yield break;
+        }
+
+        TakingPicture = true;
+
+        yield return new WaitForSeconds(time);
+
+        TakingPicture = false;
+    }
+
+
+    public bool IsTakingPicture()
+    {
+        return TakingPicture;
     }
 }
