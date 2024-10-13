@@ -42,7 +42,8 @@ public class PolaroidCamera : MonoBehaviour
         printedPhoto = Instantiate(photoPrefab, spawnPoint.position, spawnPoint.rotation);
         printedPhoto.transform.Rotate(new Vector3(0, 180, 0));
         printedPhoto.transform.Rotate(new Vector3(90, 0, 0));
-        printedPhoto.GetComponent<Renderer>().material.mainTexture = photoTexture;
+        GameObject Photo = printedPhoto.GetComponentInChildren<Transform>().gameObject.GetComponentsInChildren<Transform>()[3].gameObject;
+        Photo.GetComponent<Renderer>().material.mainTexture = photoTexture;
         PictureManagerx.GetComponent<PictureManager>().AddPicture(printedPhoto);
         printedPhoto.layer = LayerMask.NameToLayer("UI");
         printedPhoto.SetActive(false);
