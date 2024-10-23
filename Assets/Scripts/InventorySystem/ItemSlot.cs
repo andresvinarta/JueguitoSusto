@@ -48,6 +48,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         {
             Item = null;
             SlotImage.sprite = null;
+            SlotImage.gameObject.SetActive(false);
         }
     }
 

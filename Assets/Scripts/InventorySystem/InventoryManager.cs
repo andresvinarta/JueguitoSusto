@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
+using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -24,6 +26,17 @@ public class InventoryManager : MonoBehaviour
 
     private GameObject CurrentSelectedSlot;
 
+    private int CurrentPage = 0;
+
+    private int NumPicturePages = 0;
+
+    private int NumObjectPages = 0;
+
+    private int NumNotePages = 0;
+
+    [SerializeField]
+    private TextMeshProUGUI CurrentPageText, CurrentTypeText;
+
     private void Awake()
     {
         InventoryCanvas.SetActive(false);
@@ -38,10 +51,14 @@ public class InventoryManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         InventoryCanvas.SetActive(true);
+        CurrentPage = 0;
+        NumPicturePages = (Pictures.Count + ItemSlots.Count - 1) / ItemSlots.Count;
+        NumObjectPages = (Objects.Count + ItemSlots.Count - 1) / ItemSlots.Count;
+        NumNotePages = (Notes.Count + ItemSlots.Count - 1) / ItemSlots.Count;
         switch (CurrentTypeShowing)
         {
             case TypeShowing.Pictures:
-                LoadPictures(0);
+                LoadPictures(0); //Change for CurrentPage if I want to show what was las seen. Add if to show most recent pic if pic was just taken
                 ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
                 break;
             case TypeShowing.Objects:
@@ -140,6 +157,7 @@ public class InventoryManager : MonoBehaviour
                 ItemSlots[i].GetComponent<ItemSlot>().UnloadItemOnSlot();
             }
         }
+        ChangePangeText(NumPicturePages);
     }
 
     private void LoadObjects(int Page)
@@ -158,6 +176,7 @@ public class InventoryManager : MonoBehaviour
                 ItemSlots[i].GetComponent<ItemSlot>().UnloadItemOnSlot();
             }
         }
+        ChangePangeText(NumObjectPages);
     }
 
     private void LoadNotes(int Page)
@@ -176,6 +195,7 @@ public class InventoryManager : MonoBehaviour
                 ItemSlots[i].GetComponent<ItemSlot>().UnloadItemOnSlot();
             }
         }
+        ChangePangeText(NumNotePages);
     }
 
     private void UnloadAllItems()
@@ -193,5 +213,112 @@ public class InventoryManager : MonoBehaviour
             CurrentSelectedSlot.GetComponent<ItemSlot>().ItemUnselected();
         }
         CurrentSelectedSlot = NewCurrentSlot;
+    }
+
+    public void NextPage()
+    {
+        
+        switch (CurrentTypeShowing)
+        {
+            case TypeShowing.Pictures:
+                if (CurrentPage < NumPicturePages - 1)
+                {
+                    CurrentPage++;
+                    LoadPictures(CurrentPage); 
+                    ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                }
+                break;
+            case TypeShowing.Objects:
+                if (CurrentPage < NumObjectPages - 1)
+                {
+                    CurrentPage++;
+                    LoadObjects(CurrentPage);
+                    ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                }
+                break;
+            case TypeShowing.Notes:
+                if (CurrentPage < NumNotePages - 1)
+                {
+                    CurrentPage++;
+                    LoadNotes(CurrentPage);
+                    ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void PreviousPage()
+    {
+
+        switch (CurrentTypeShowing)
+        {
+            case TypeShowing.Pictures:
+                if (CurrentPage > 0)
+                {
+                    CurrentPage--;
+                    LoadPictures(CurrentPage);
+                    ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                }
+                break;
+            case TypeShowing.Objects:
+                if (CurrentPage > 0)
+                {
+                    CurrentPage--;
+                    LoadObjects(CurrentPage);
+                    ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                }
+                break;
+            case TypeShowing.Notes:
+                if (CurrentPage > 0)
+                {
+                    CurrentPage--;
+                    LoadNotes(CurrentPage);
+                    ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void ChangePangeText(int MaxPages)
+    {
+        if (MaxPages > 0)
+        {
+            CurrentPageText.text = (CurrentPage + 1).ToString() + " / " + MaxPages.ToString();
+        }
+        else
+        {
+            CurrentPageText.text = "0 / 0";
+        }
+    }
+
+    public void ChangeToPictures()
+    {
+        CurrentTypeShowing = TypeShowing.Pictures;
+        CurrentPage = 0;
+        LoadPictures(CurrentPage);
+        ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+        CurrentTypeText.text = "Pictures";
+    }
+
+    public void ChangeToObjects() 
+    {  
+        CurrentTypeShowing = TypeShowing.Objects;
+        CurrentPage = 0;
+        LoadObjects(CurrentPage);
+        ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+        CurrentTypeText.text = "Objects";
+    }
+
+    public void ChangeToNotes()
+    {
+        CurrentTypeShowing = TypeShowing.Notes;
+        CurrentPage = 0;
+        LoadNotes(CurrentPage);
+        ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+        CurrentTypeText.text = "Notes";
     }
 }

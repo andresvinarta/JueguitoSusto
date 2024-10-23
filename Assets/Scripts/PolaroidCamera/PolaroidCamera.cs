@@ -55,11 +55,11 @@ public class PolaroidCamera : MonoBehaviour
         //PictureManagerx.GetComponent<PictureManager>().AddPicture(printedPhoto);
 
         //Establecemos el layer de la foto como UI para poder verla después
-        printedPhoto.layer = LayerMask.NameToLayer("UI");
+        printedPhoto.layer = LayerMask.NameToLayer("ItemRenderUI");
         Transform[] Children = printedPhoto.GetComponentsInChildren<Transform>();
         for (int i = 0; i < printedPhoto.GetComponentsInChildren<Transform>().Length; i++)
         {
-            Children[i].gameObject.layer = LayerMask.NameToLayer("UI");
+            Children[i].gameObject.layer = LayerMask.NameToLayer("ItemRenderUI");
         }
 
         //Actualizamos la escala y rotación de la foto
