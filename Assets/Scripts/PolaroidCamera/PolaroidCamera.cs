@@ -10,6 +10,7 @@ public class PolaroidCamera : MonoBehaviour
     public Transform spawnPoint; // Punto donde aparecerá la foto "impresa"
     GameObject printedPhoto;
     public GameObject PictureManagerx;
+    public InventoryManager InventoryManager;
     private InputSystem_Actions PlayerInput;
     private bool TakingPicture = false;
 
@@ -19,16 +20,18 @@ public class PolaroidCamera : MonoBehaviour
         PlayerInput = new InputSystem_Actions();
         PlayerInput.Enable();
         PlayerInput.Player.TakePicture.performed += TakePicture;
+        InventoryManager = GameObject.Find("UICamera").GetComponent<InventoryManager>();
     }
 
     public void TakePicture(InputAction.CallbackContext context)
     {
-        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture) return;
+        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture || InventoryManager.IsInventoryShowing()) return;
 
 
         // Activa la cámara Polaroid (si está desactivada)
         polaroidCamera.enabled = true;
 
+        //Activamos cooldown
         StartCoroutine(ExecuteAfterTime(1.5f));
 
         // Captura la imagen como una textura
@@ -39,16 +42,36 @@ public class PolaroidCamera : MonoBehaviour
         photoTexture.Apply();
         RenderTexture.active = null;
 
+        //Instanciamos prefab de la foto
         printedPhoto = Instantiate(photoPrefab, spawnPoint.position, spawnPoint.rotation);
-        printedPhoto.transform.Rotate(new Vector3(0, 180, 0));
-        printedPhoto.transform.Rotate(new Vector3(90, 0, 0));
+
+        //Añadimos la foto como textura al prefab
         GameObject Photo = printedPhoto.GetComponentInChildren<Transform>().gameObject.GetComponentsInChildren<Transform>()[3].gameObject;
         Photo.GetComponent<Renderer>().material.mainTexture = photoTexture;
-        PictureManagerx.GetComponent<PictureManager>().AddPicture(printedPhoto);
+
+        //Añadimos la foto al InventoryManager
+        printedPhoto.GetComponent<PictureItem>().SetPictureNumber(InventoryManager.GetNumberOfPictures() + 1);
+        InventoryManager.AddPicture(printedPhoto);
+        //PictureManagerx.GetComponent<PictureManager>().AddPicture(printedPhoto);
+
+        //Establecemos el layer de la foto como UI para poder verla después
         printedPhoto.layer = LayerMask.NameToLayer("UI");
+        Transform[] Children = printedPhoto.GetComponentsInChildren<Transform>();
+        for (int i = 0; i < printedPhoto.GetComponentsInChildren<Transform>().Length; i++)
+        {
+            Children[i].gameObject.layer = LayerMask.NameToLayer("UI");
+        }
+
+        //Actualizamos la escala y rotación de la foto
+        //printedPhoto.transform.localScale = new Vector3(200, 200, 200);
+        //printedPhoto.transform.rotation = Quaternion.Euler(90, 180, 0);
+        //printedPhoto.transform.Rotate(new Vector3(0, 180, 0));
+        //printedPhoto.transform.Rotate(new Vector3(90, 0, 0));
+
+        //Desactivamos el objeto
         printedPhoto.SetActive(false);
 
-        PictureManagerx.GetComponent<PictureManager>().JustTookAPicture();
+        //PictureManagerx.GetComponent<PictureManager>().JustTookAPicture();
 
         // Desactiva la cámara después de capturar la imagen
         polaroidCamera.enabled = false;
@@ -73,4 +96,14 @@ public class PolaroidCamera : MonoBehaviour
     {
         return TakingPicture;
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    Debug.Log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+    //}
 }

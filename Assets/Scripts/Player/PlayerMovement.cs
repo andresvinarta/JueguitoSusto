@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;      // Referencia al Rigidbody
     private Vector2 moveInput; // Input de movimiento
     private InputSystem_Actions PlayerInput;
-    public GameObject PictureManagerCam;
+    public GameObject PictureManagerCam, InventoryManager;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Movemos el personaje basándonos en el input recibido
         moveInput = PlayerInput.Player.Move.ReadValue<Vector2>();
-        if (!PictureManagerCam.GetComponent<PictureManager>().IsShowing())
+        if (!PictureManagerCam.GetComponent<PictureManager>().IsShowing() && !InventoryManager.GetComponent<InventoryManager>().IsInventoryShowing())
         {
             MovePlayer();
         }

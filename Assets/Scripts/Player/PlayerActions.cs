@@ -4,13 +4,14 @@ using UnityEngine.InputSystem;
 public class PlayerActions : MonoBehaviour
 {
     private InputSystem_Actions PlayerInput;
-    public GameObject PictureManagerCam, PolaroidCamera;
+    public GameObject PictureManagerCam, PolaroidCamera, InventoryManager;
 
     private void Awake()
     {
         PlayerInput = new InputSystem_Actions();
         PlayerInput.Enable();
-        PlayerInput.Player.CheckPictures.performed += CheckPictures;
+        //PlayerInput.Player.CheckPictures.performed += CheckPictures;
+        PlayerInput.Player.CheckPictures.performed += OpenInventory;
     }
 
     public void Interact()
@@ -30,6 +31,18 @@ public class PlayerActions : MonoBehaviour
             {
                 PictureManagerCam.GetComponent<PictureManager>().CloseUp();
             }
+        }
+    }
+
+    public void OpenInventory(InputAction.CallbackContext callbackContext)
+    {
+        if (!InventoryManager.GetComponent<InventoryManager>().IsInventoryShowing())
+        {
+            InventoryManager.GetComponent<InventoryManager>().OpenInventory();
+        }
+        else
+        {
+            InventoryManager.GetComponent<InventoryManager>().CloseInventory();
         }
     }
 }

@@ -10,6 +10,11 @@ public class ObjectSwing : MonoBehaviour
     public float Frequency = 5.0f;
     private InputSystem_Actions PlayerInput;
 
+    private float TimerOn = 0;
+
+    private float TimerOff = 0;
+    public float ReturnDuration = 100f;
+
 
     private void Awake()
     {
@@ -26,11 +31,18 @@ public class ObjectSwing : MonoBehaviour
             if (PlayerInput.Player.Move.ReadValue<Vector2>().magnitude > 0.15)
             {
                 Swing();
+                TimerOn += Time.deltaTime;
+                TimerOff = 0;
                 //PlayerLastPos = Player.transform.position;
             }
             else
             {
-                transform.localPosition = StartPos;
+                if (transform.localPosition != StartPos)
+                {
+                    transform.localPosition = Vector3.Lerp(transform.localPosition, StartPos, TimerOff/ReturnDuration);
+                    TimerOff += Time.deltaTime;
+                    TimerOn = 0;
+                }
                 //Debug.Log(Player.GetComponent<Rigidbody>().angularVelocity.magnitude.ToString());
                 //Debug.Log((Player.transform.position - PlayerLastPos).magnitude.ToString());
             }
@@ -40,7 +52,7 @@ public class ObjectSwing : MonoBehaviour
 
     private void Swing()
     {
-        float Swing = Mathf.Sin(Time.time * Frequency) * Amplitude;
+        float Swing = Mathf.Sin(TimerOn * Frequency) * Amplitude;
 
         Vector3 NewPos = StartPos;
         NewPos.y += Swing;
