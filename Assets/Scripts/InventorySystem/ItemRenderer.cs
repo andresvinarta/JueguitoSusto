@@ -31,7 +31,7 @@ public class ItemRenderer : MonoBehaviour, IPointerDownHandler, IDragHandler, IP
         NoteText.text = "";
         ItemRendering = NewItem;
         NewItem.transform.SetParent(this.transform, false);
-        ItemRendering.transform.localScale = new Vector3(200, 200, 200);
+        ItemRendering.transform.localScale = new Vector3(250, 250, 250);
         ItemRendering.transform.localRotation = Quaternion.Euler(0, 180, 0);
         if (NewItem.tag != "Picture")
         {

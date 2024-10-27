@@ -23,6 +23,7 @@ public class NoteItem : MonoBehaviour
     public void PickUp()
     {
         InventoryManager.AddNote(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     public string GetNoteName()
