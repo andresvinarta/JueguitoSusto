@@ -2,10 +2,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ItemRenderer : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    public GameObject ItemRendering;
+    public GameObject ItemRendering, RotationReference;
     public TextMeshProUGUI NoteText;
 
     // Sensibilidad de la rotación
@@ -31,7 +32,16 @@ public class ItemRenderer : MonoBehaviour, IPointerDownHandler, IDragHandler, IP
         ItemRendering = NewItem;
         NewItem.transform.SetParent(this.transform, false);
         ItemRendering.transform.localScale = new Vector3(200, 200, 200);
-        ItemRendering.transform.localRotation = Quaternion.Euler(90, 180, 0);
+        ItemRendering.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        if (NewItem.tag != "Picture")
+        {
+            ItemRendering.layer = LayerMask.NameToLayer("ItemRenderUI");
+            Transform[] Transforms = NewItem.GetComponentsInChildren<Transform>();
+            foreach (Transform ItemTransform in Transforms)
+            {
+                ItemTransform.gameObject.layer = LayerMask.NameToLayer("ItemRenderUI");
+            }
+        }
         ItemRendering.SetActive(true);
     }
 
@@ -85,8 +95,8 @@ public class ItemRenderer : MonoBehaviour, IPointerDownHandler, IDragHandler, IP
                 float rotationY = -delta.x * rotationSpeed; // Movimiento horizontal rota en el eje Y
 
                 // Rotamos el objeto
-                ItemRendering.transform.Rotate(Vector3.up, rotationY, Space.World);
-                ItemRendering.transform.Rotate(Vector3.right, rotationX, Space.World);
+                ItemRendering.transform.RotateAround(RotationReference.transform.position, RotationReference.transform.up, rotationY);
+                ItemRendering.transform.RotateAround(RotationReference.transform.position, RotationReference.transform.right, rotationX);
 
                 // Actualizamos la posición del ratón para el siguiente frame
                 lastMousePosition = currentMousePosition;

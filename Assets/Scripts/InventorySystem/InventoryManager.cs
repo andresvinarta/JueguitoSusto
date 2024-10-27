@@ -26,13 +26,31 @@ public class InventoryManager : MonoBehaviour
 
     private GameObject CurrentSelectedSlot;
 
+    private int CurrentPictureSelectedSlot = 0;
+
+    private int CurrentObjectSelectedSlot = 0;
+
+    private int CurrentNoteSelectedSlot = 0;
+
     private int CurrentPage = 0;
+
+    private int CurrentPicturePage = 0;
+
+    private int CurrentObjectPage = 0;
+
+    private int CurrentNotePage = 0;
 
     private int NumPicturePages = 0;
 
     private int NumObjectPages = 0;
 
     private int NumNotePages = 0;
+
+    private bool PictureJustTaken = false;
+
+    private bool ObjectJustPicked = false;
+
+    private bool NoteJustPicked = false;
 
     [SerializeField]
     private TextMeshProUGUI CurrentPageText, CurrentTypeText;
@@ -51,23 +69,51 @@ public class InventoryManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         InventoryCanvas.SetActive(true);
-        CurrentPage = 0;
+        //CurrentPage = 0;
         NumPicturePages = (Pictures.Count + ItemSlots.Count - 1) / ItemSlots.Count;
         NumObjectPages = (Objects.Count + ItemSlots.Count - 1) / ItemSlots.Count;
         NumNotePages = (Notes.Count + ItemSlots.Count - 1) / ItemSlots.Count;
+
+        if (NoteJustPicked)
+        {
+            CurrentNotePage = 0;
+            ItemSlots[CurrentNoteSelectedSlot].GetComponent<ItemSlot>().ItemUnselected();
+            CurrentNoteSelectedSlot = 0;
+            CurrentTypeShowing = TypeShowing.Notes;
+            CurrentTypeText.text = "Notes";
+            NoteJustPicked = false;
+        }
+        if (ObjectJustPicked)
+        {
+            CurrentObjectPage = 0;
+            ItemSlots[CurrentObjectSelectedSlot].GetComponent<ItemSlot>().ItemUnselected();
+            CurrentObjectSelectedSlot = 0;
+            CurrentTypeShowing = TypeShowing.Objects;
+            CurrentTypeText.text = "Objects";
+            ObjectJustPicked = false;
+        }
+        if (PictureJustTaken)
+        {
+            CurrentPicturePage = 0;
+            ItemSlots[CurrentPictureSelectedSlot].GetComponent<ItemSlot>().ItemUnselected();
+            CurrentPictureSelectedSlot = 0;
+            CurrentTypeShowing = TypeShowing.Pictures;
+            CurrentTypeText.text = "Pictures";
+            PictureJustTaken = false;
+        }
         switch (CurrentTypeShowing)
         {
             case TypeShowing.Pictures:
-                LoadPictures(0); //Change for CurrentPage if I want to show what was las seen. Add if to show most recent pic if pic was just taken
-                ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                LoadPictures(CurrentPicturePage); //Change for CurrentPage if I want to show what was last seen. Add if to show most recent pic if pic was just taken
+                ItemSlots[CurrentPictureSelectedSlot].GetComponent<ItemSlot>().ItemSelected();
                 break;
             case TypeShowing.Objects:
-                LoadObjects(0);
-                ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                LoadObjects(CurrentObjectPage);
+                ItemSlots[CurrentObjectSelectedSlot].GetComponent<ItemSlot>().ItemSelected();
                 break;
             case TypeShowing.Notes:
-                LoadNotes(0);
-                ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+                LoadNotes(CurrentNotePage);
+                ItemSlots[CurrentNoteSelectedSlot].GetComponent<ItemSlot>().ItemSelected();
                 break;
             default:
                 break;
@@ -93,6 +139,7 @@ public class InventoryManager : MonoBehaviour
         if (PictureToAdd != null)
         {
             Pictures.Insert(0, PictureToAdd);
+            PictureJustTaken = true;
         }
     }
 
@@ -114,6 +161,7 @@ public class InventoryManager : MonoBehaviour
         if (ObjectToAdd != null && !Objects.Contains(ObjectToAdd))
         {
             Objects.Insert(0, ObjectToAdd);
+            ObjectJustPicked = true;
         }
     }
 
@@ -130,6 +178,7 @@ public class InventoryManager : MonoBehaviour
         if (NoteToAdd != null && !Notes.Contains(NoteToAdd))
         {
             Notes.Insert(0, NoteToAdd);
+            NoteJustPicked = true;
         }
     }
 
@@ -157,7 +206,7 @@ public class InventoryManager : MonoBehaviour
                 ItemSlots[i].GetComponent<ItemSlot>().UnloadItemOnSlot();
             }
         }
-        ChangePangeText(NumPicturePages);
+        ChangePageText(NumPicturePages);
     }
 
     private void LoadObjects(int Page)
@@ -176,7 +225,7 @@ public class InventoryManager : MonoBehaviour
                 ItemSlots[i].GetComponent<ItemSlot>().UnloadItemOnSlot();
             }
         }
-        ChangePangeText(NumObjectPages);
+        ChangePageText(NumObjectPages);
     }
 
     private void LoadNotes(int Page)
@@ -195,7 +244,7 @@ public class InventoryManager : MonoBehaviour
                 ItemSlots[i].GetComponent<ItemSlot>().UnloadItemOnSlot();
             }
         }
-        ChangePangeText(NumNotePages);
+        ChangePageText(NumNotePages);
     }
 
     private void UnloadAllItems()
@@ -208,11 +257,30 @@ public class InventoryManager : MonoBehaviour
     
     public void NewSlotSelected(GameObject NewCurrentSlot)
     {
-        if (CurrentSelectedSlot != null)
+        //if (CurrentSelectedSlot != null)
+        //{
+        //    CurrentSelectedSlot.GetComponent<ItemSlot>().ItemUnselected();
+        //}
+        //CurrentSelectedSlot = NewCurrentSlot;
+
+        ItemSlots[CurrentPictureSelectedSlot].GetComponent<ItemSlot>().ItemUnselected();
+        ItemSlots[CurrentObjectSelectedSlot].GetComponent<ItemSlot>().ItemUnselected();
+        ItemSlots[CurrentNoteSelectedSlot].GetComponent<ItemSlot>().ItemUnselected();
+
+        switch (CurrentTypeShowing)
         {
-            CurrentSelectedSlot.GetComponent<ItemSlot>().ItemUnselected();
+            case TypeShowing.Pictures:
+                CurrentPictureSelectedSlot = ItemSlots.IndexOf(NewCurrentSlot);
+                break;
+            case TypeShowing.Objects:
+                CurrentObjectSelectedSlot = ItemSlots.IndexOf(NewCurrentSlot);
+                break;
+            case TypeShowing.Notes:
+                CurrentNoteSelectedSlot = ItemSlots.IndexOf(NewCurrentSlot);
+                break;
+            default:
+                break;
         }
-        CurrentSelectedSlot = NewCurrentSlot;
     }
 
     public void NextPage()
@@ -221,26 +289,26 @@ public class InventoryManager : MonoBehaviour
         switch (CurrentTypeShowing)
         {
             case TypeShowing.Pictures:
-                if (CurrentPage < NumPicturePages - 1)
+                if (CurrentPicturePage < NumPicturePages - 1)
                 {
-                    CurrentPage++;
-                    LoadPictures(CurrentPage); 
+                    CurrentPicturePage++;
+                    LoadPictures(CurrentPicturePage); 
                     ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
                 }
                 break;
             case TypeShowing.Objects:
-                if (CurrentPage < NumObjectPages - 1)
+                if (CurrentObjectPage < NumObjectPages - 1)
                 {
-                    CurrentPage++;
-                    LoadObjects(CurrentPage);
+                    CurrentObjectPage++;
+                    LoadObjects(CurrentObjectPage);
                     ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
                 }
                 break;
             case TypeShowing.Notes:
-                if (CurrentPage < NumNotePages - 1)
+                if (CurrentNotePage < NumNotePages - 1)
                 {
-                    CurrentPage++;
-                    LoadNotes(CurrentPage);
+                    CurrentNotePage++;
+                    LoadNotes(CurrentNotePage);
                     ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
                 }
                 break;
@@ -255,26 +323,26 @@ public class InventoryManager : MonoBehaviour
         switch (CurrentTypeShowing)
         {
             case TypeShowing.Pictures:
-                if (CurrentPage > 0)
+                if (CurrentPicturePage > 0)
                 {
-                    CurrentPage--;
-                    LoadPictures(CurrentPage);
+                    CurrentPicturePage--;
+                    LoadPictures(CurrentPicturePage);
                     ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
                 }
                 break;
             case TypeShowing.Objects:
-                if (CurrentPage > 0)
+                if (CurrentObjectPage > 0)
                 {
-                    CurrentPage--;
-                    LoadObjects(CurrentPage);
+                    CurrentObjectPage--;
+                    LoadObjects(CurrentObjectPage);
                     ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
                 }
                 break;
             case TypeShowing.Notes:
-                if (CurrentPage > 0)
+                if (CurrentNotePage > 0)
                 {
-                    CurrentPage--;
-                    LoadNotes(CurrentPage);
+                    CurrentPicturePage--;
+                    LoadNotes(CurrentPicturePage);
                     ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
                 }
                 break;
@@ -283,13 +351,33 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void ChangePangeText(int MaxPages)
+    private void ChangePageText(int MaxPages)
     {
-        if (MaxPages > 0)
+
+        switch (CurrentTypeShowing)
         {
-            CurrentPageText.text = (CurrentPage + 1).ToString() + " / " + MaxPages.ToString();
+            case TypeShowing.Pictures:
+                if (MaxPages > 0)
+                {
+                    CurrentPageText.text = (CurrentPicturePage + 1).ToString() + " / " + MaxPages.ToString();
+                }
+                break;
+            case TypeShowing.Objects:
+                if (MaxPages > 0)
+                {
+                    CurrentPageText.text = (CurrentObjectPage + 1).ToString() + " / " + MaxPages.ToString();
+                }
+                break;
+            case TypeShowing.Notes:
+                if (MaxPages > 0)
+                {
+                    CurrentPageText.text = (CurrentNotePage + 1).ToString() + " / " + MaxPages.ToString();
+                }
+                break;
+            default:
+                break;
         }
-        else
+        if (MaxPages <= 0)
         {
             CurrentPageText.text = "0 / 0";
         }
@@ -298,27 +386,27 @@ public class InventoryManager : MonoBehaviour
     public void ChangeToPictures()
     {
         CurrentTypeShowing = TypeShowing.Pictures;
-        CurrentPage = 0;
-        LoadPictures(CurrentPage);
-        ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+        //CurrentPicturePage = 0;
+        LoadPictures(CurrentPicturePage);
+        ItemSlots[CurrentPictureSelectedSlot].GetComponent<ItemSlot>().ItemSelected();
         CurrentTypeText.text = "Pictures";
     }
 
     public void ChangeToObjects() 
     {  
         CurrentTypeShowing = TypeShowing.Objects;
-        CurrentPage = 0;
-        LoadObjects(CurrentPage);
-        ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+        //CurrentObjectPage = 0;
+        LoadObjects(CurrentObjectPage);
+        ItemSlots[CurrentObjectSelectedSlot].GetComponent<ItemSlot>().ItemSelected();
         CurrentTypeText.text = "Objects";
     }
 
     public void ChangeToNotes()
     {
         CurrentTypeShowing = TypeShowing.Notes;
-        CurrentPage = 0;
-        LoadNotes(CurrentPage);
-        ItemSlots[0].GetComponent<ItemSlot>().ItemSelected();
+        //CurrentNotePage = 0;
+        LoadNotes(CurrentNotePage);
+        ItemSlots[CurrentNoteSelectedSlot].GetComponent<ItemSlot>().ItemSelected();
         CurrentTypeText.text = "Notes";
     }
 }

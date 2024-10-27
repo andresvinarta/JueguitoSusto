@@ -25,12 +25,12 @@ public class InCameraDetect : MonoBehaviour
         if (GeometryUtility.TestPlanesAABB(CameraPlanes, ColliderBounds) && !AlreadyDetected)
         {
             AlreadyDetected = true;
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            //Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         }
         else if (!GeometryUtility.TestPlanesAABB(CameraPlanes, ColliderBounds) && AlreadyDetected)
         {
             AlreadyDetected = false;
-            Debug.Log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+            //Debug.Log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         }
     }
 }

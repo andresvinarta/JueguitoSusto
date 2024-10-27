@@ -20,6 +20,7 @@ public class ObjectItem : MonoBehaviour
     public void PickUp()
     {
         InventoryManager.AddObject(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     public string GetObjectName()
