@@ -32,8 +32,6 @@ public class InventoryManager : MonoBehaviour
 
     private int CurrentNoteSelectedSlot = 0;
 
-    private int CurrentPage = 0;
-
     private int CurrentPicturePage = 0;
 
     private int CurrentObjectPage = 0;
@@ -408,5 +406,17 @@ public class InventoryManager : MonoBehaviour
         LoadNotes(CurrentNotePage);
         ItemSlots[CurrentNoteSelectedSlot].GetComponent<ItemSlot>().ItemSelected();
         CurrentTypeText.text = "Notes";
+    }
+
+    public bool HaveKeyWithID(int ID)
+    {
+        foreach (GameObject Object in Objects)
+        {
+            if (Object.tag == "Key" && Object.GetComponent<Key>().GetKeyID() == ID)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

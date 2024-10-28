@@ -36,10 +36,36 @@ public class PlayerActions : MonoBehaviour
         Ray InteractRay = new Ray(PlayerMainCam.transform.position, PlayerMainCam.transform.forward);
         if (Physics.Raycast(InteractRay, out RaycastHit Hit, InteractDistance, InteractLayerMask))
         {
-            if (Hit.transform.tag == "ObjectItem" || Hit.transform.tag == "NoteItem")
+            if (Hit.transform.tag == "ObjectItem" || Hit.transform.tag == "NoteItem" || Hit.transform.tag == "Key")
             {
                 InteractPrompt.gameObject.SetActive(true);
                 InteractPrompt.text = "Press " + PlayerInput.Player.Interact.bindings.FirstOrDefault().ToDisplayString() + " to pick up";
+            }
+            else if (Hit.transform.tag == "Door" && !Hit.transform.gameObject.GetComponent<Door>().IsDoorSwinging())
+            {
+                InteractPrompt.gameObject.SetActive(true);
+                if (Hit.transform.gameObject.GetComponent<Door>().IsDoorLocked())
+                {
+                    if (InventoryManager.GetComponent<InventoryManager>().HaveKeyWithID(Hit.transform.gameObject.GetComponent<Door>().GetDoorID()))
+                    {
+                        InteractPrompt.text = "Press " + PlayerInput.Player.Interact.bindings.FirstOrDefault().ToDisplayString() + " to unlock";
+                    }
+                    else
+                    {
+                        InteractPrompt.text = "The door seems to be locked, find the key";
+                    }
+                }
+                else
+                {
+                    if (Hit.transform.gameObject.GetComponent<Door>().IsDoorOpen())
+                    {
+                        InteractPrompt.text = "Press " + PlayerInput.Player.Interact.bindings.FirstOrDefault().ToDisplayString() + " to close";
+                    }
+                    else
+                    {
+                        InteractPrompt.text = "Press " + PlayerInput.Player.Interact.bindings.FirstOrDefault().ToDisplayString() + " to open";
+                    }
+                }
             }
         }
         else
@@ -53,13 +79,38 @@ public class PlayerActions : MonoBehaviour
         Ray InteractRay = new Ray(PlayerMainCam.transform.position, PlayerMainCam.transform.forward);
         if (Physics.Raycast(InteractRay, out RaycastHit Hit, InteractDistance, InteractLayerMask))
         {
-            if (Hit.transform.tag == "ObjectItem")
+            if (Hit.transform.tag == "ObjectItem" || Hit.transform.tag == "Key")
             {
                 Hit.transform.gameObject.GetComponent<ObjectItem>().PickUp();
             }
             else if (Hit.transform.tag == "NoteItem")
             {
                 Hit.transform.gameObject.GetComponent<NoteItem>().PickUp();
+            }
+            else if (Hit.transform.tag == "Door")
+            {
+                if (Hit.transform.gameObject.GetComponent<Door>().IsDoorLocked())
+                {
+                    if (InventoryManager.GetComponent<InventoryManager>().HaveKeyWithID(Hit.transform.gameObject.GetComponent<Door>().GetDoorID()))
+                    {
+                        Hit.transform.gameObject.GetComponent<Door>().UnlockDoor();
+                    }
+                    else
+                    {
+                        Hit.transform.gameObject.GetComponent<Door>().FailedToUnlock();
+                    }
+                }
+                else
+                {
+                    if (Hit.transform.gameObject.GetComponent<Door>().IsDoorOpen())
+                    {
+                        Hit.transform.gameObject.GetComponent<Door>().CloseDoor();
+                    }
+                    else
+                    {
+                        Hit.transform.gameObject.GetComponent<Door>().OpenDoor();
+                    }
+                }
             }
         }
     }

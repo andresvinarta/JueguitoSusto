@@ -17,9 +17,9 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        //// Bloquear el cursor al iniciar el juego (opcional)
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        // Bloquear el cursor al iniciar el juego (opcional)
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Awake()

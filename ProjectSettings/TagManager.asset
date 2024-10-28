@@ -7,6 +7,8 @@ TagManager:
   - ObjectItem
   - NoteItem
   - Picture
+  - Door
+  - Key
   layers:
   - Default
   - TransparentFX
