@@ -1,0 +1,322 @@
+fileFormatVersion: 2
+guid: 5b32f9a0ba31b974388a9b9d1a974fea
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: 6dd21586b0ceb914b8deb9122f05c9ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: base bombilla
+    second: {fileID: 2100000, guid: 18fee33ef5efa624293338c5c2051977, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bombilla
+    second: {fileID: 2100000, guid: 0f16ed9b8ed6f7b4e890805d1cf80193, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cilindro valla
+    second: {fileID: 2100000, guid: 3262b305146e04c45be55aa92fd83786, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cilindro verja
+    second: {fileID: 2100000, guid: 4c5056970043bb646b5f167597bb7ef6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cuerda
+    second: {fileID: 2100000, guid: 1a8e4f5ad33698d4eb3bffb3f95f846f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: farol
+    second: {fileID: 2100000, guid: 52ac2f09a2cf71a489aaa69f654515cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hierba
+    second: {fileID: 2100000, guid: 2551479ff19789949ab243b8c7dcd47a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: piedra
+    second: {fileID: 2100000, guid: 86a00c484bd3e284da9a4f5746b4a993, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: puente
+    second: {fileID: 2100000, guid: 8683609971e11d645bfa455eaec947e2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ramas
+    second: {fileID: 2100000, guid: acebd5e91ee4462498389621f9e3c68d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tronco
+    second: {fileID: 2100000, guid: 01ddd598af5a87b4b8ea9083a8b0d4f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: verja
+    second: {fileID: 2100000, guid: 3bb6a2decc28b5c4b8340aac5f10b3ea, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Bark014_2K-PNG_Color
+    second: {fileID: 2800000, guid: c561b33a1410c47478b90ef6d3d0fa87, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Bark014_2K-PNG_NormalGL
+    second: {fileID: 2800000, guid: 266985f925ae21e49821bf06d74b59ae, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Bark014_2K-PNG_Roughness
+    second: {fileID: 2800000, guid: 48ee94626e8054c4d8972de5871435b8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: CorrugatedSteel005_1K-PNG_Color
+    second: {fileID: 2800000, guid: 44d419bf0e6be2e43b21edbad11aab05, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: CorrugatedSteel005_1K-PNG_Metalness
+    second: {fileID: 2800000, guid: 1836e1ce5f2357543951054d2a547b09, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: CorrugatedSteel005_1K-PNG_NormalGL
+    second: {fileID: 2800000, guid: f658546431b2e954f9f259b6b37db437, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: CorrugatedSteel005_1K-PNG_Roughness
+    second: {fileID: 2800000, guid: 3a2fbc8d3e0466f47adb2d46bfc35bea, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal046B_2K-PNG_Color
+    second: {fileID: 2800000, guid: 256ee138b52fca143b829e1207576e38, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal046B_2K-PNG_Metalness
+    second: {fileID: 2800000, guid: c0a6ec183cb6ced4698f7cc5a2eee609, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal046B_2K-PNG_NormalGL
+    second: {fileID: 2800000, guid: db8c155ca7c16e441836151f67a42e5b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal046B_2K-PNG_Roughness
+    second: {fileID: 2800000, guid: 9199fc843f9af154f9a3dee18b79227d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal053C_1K-PNG_Color
+    second: {fileID: 2800000, guid: f6b75e6dd1cb3ae46bbb089702459e95, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal053C_1K-PNG_Metalness
+    second: {fileID: 2800000, guid: f4075892435db544ba4abfbb68a903e5, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal053C_1K-PNG_NormalGL
+    second: {fileID: 2800000, guid: 5d636f67a00860248b083299e56895e4, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal053C_1K-PNG_Roughness
+    second: {fileID: 2800000, guid: 4beb0dea021f31943956524bc037a419, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Planks013_2K-PNG_Color
+    second: {fileID: 2800000, guid: 23d93b416487ad64bb1a656c8adcc235, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Planks013_2K-PNG_Metalness
+    second: {fileID: 2800000, guid: d6f65b13478e83b4dba9fac07a77ec92, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Planks013_2K-PNG_NormalGL
+    second: {fileID: 2800000, guid: ddca0a8bde2286e4fbf41ad526a54e50, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Planks013_2K-PNG_Roughness
+    second: {fileID: 2800000, guid: 24d577996e10fe946ab95385d52b7d67, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Rope001_2K-PNG_Color
+    second: {fileID: 2800000, guid: 4e063eddec24e9f408c6774049d40eb6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Rope001_2K-PNG_NormalGL
+    second: {fileID: 2800000, guid: d663300d16d420349aee27243a5bdd78, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Rope001_2K-PNG_Roughness
+    second: {fileID: 2800000, guid: 5005ddc498e55cd42b9a8aa080e7b33a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TreeEnd005_2K-PNG_Color
+    second: {fileID: 2800000, guid: 175c9b96bea935f48b0e05060a0fc07c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TreeEnd005_2K-PNG_NormalGL
+    second: {fileID: 2800000, guid: 5c9666e121c42684c8855de0923cc20c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TreeEnd005_2K-PNG_Opacity
+    second: {fileID: 2800000, guid: a9778d498bf315a42a7199bcba3141e1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TreeEnd005_2K-PNG_Roughness
+    second: {fileID: 2800000, guid: 0d1623fab17af6443bc19ad7c98a599f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Wood059_2K-PNG_Color
+    second: {fileID: 2800000, guid: 1c3a83e6dffa0d548818c90a24378189, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Wood059_2K-PNG_NormalGL
+    second: {fileID: 2800000, guid: 6fa72ef5259c6bb4a9d5414bdc1562e3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Wood059_2K-PNG_Roughness
+    second: {fileID: 2800000, guid: dfa568a18acc4434189e6eb4bfafef76, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: hojas
+    second: {fileID: 2800000, guid: 56183b615cb98ab40baf30a2454aa8b5, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
