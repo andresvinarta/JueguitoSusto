@@ -91,6 +91,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""LoadReel"",
+                    ""type"": ""Button"",
+                    ""id"": ""51a068f1-ada2-4d73-8676-35b8ecaf1f0d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Previous"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
@@ -466,6 +475,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Take Picture"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5c023ce-85c8-4e73-b246-d2035cddba15"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""LoadReel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cacc61a7-d62a-4f5f-9656-19671e873eba"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LoadReel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1148,6 +1179,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_TakePicture = m_Player.FindAction("Take Picture", throwIfNotFound: true);
+        m_Player_LoadReel = m_Player.FindAction("LoadReel", throwIfNotFound: true);
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
@@ -1238,6 +1270,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_TakePicture;
+    private readonly InputAction m_Player_LoadReel;
     private readonly InputAction m_Player_Previous;
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
@@ -1253,6 +1286,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @TakePicture => m_Wrapper.m_Player_TakePicture;
+        public InputAction @LoadReel => m_Wrapper.m_Player_LoadReel;
         public InputAction @Previous => m_Wrapper.m_Player_Previous;
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
@@ -1287,6 +1321,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @TakePicture.started += instance.OnTakePicture;
             @TakePicture.performed += instance.OnTakePicture;
             @TakePicture.canceled += instance.OnTakePicture;
+            @LoadReel.started += instance.OnLoadReel;
+            @LoadReel.performed += instance.OnLoadReel;
+            @LoadReel.canceled += instance.OnLoadReel;
             @Previous.started += instance.OnPrevious;
             @Previous.performed += instance.OnPrevious;
             @Previous.canceled += instance.OnPrevious;
@@ -1324,6 +1361,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @TakePicture.started -= instance.OnTakePicture;
             @TakePicture.performed -= instance.OnTakePicture;
             @TakePicture.canceled -= instance.OnTakePicture;
+            @LoadReel.started -= instance.OnLoadReel;
+            @LoadReel.performed -= instance.OnLoadReel;
+            @LoadReel.canceled -= instance.OnLoadReel;
             @Previous.started -= instance.OnPrevious;
             @Previous.performed -= instance.OnPrevious;
             @Previous.canceled -= instance.OnPrevious;
@@ -1525,6 +1565,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnTakePicture(InputAction.CallbackContext context);
+        void OnLoadReel(InputAction.CallbackContext context);
         void OnPrevious(InputAction.CallbackContext context);
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);

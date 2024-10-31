@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PolaroidCamera : MonoBehaviour
 {
@@ -9,10 +10,30 @@ public class PolaroidCamera : MonoBehaviour
     public GameObject photoPrefab; // Prefab que representa la foto impresa en el mundo del juego
     public Transform spawnPoint; // Punto donde aparecerá la foto "impresa"
     GameObject printedPhoto;
-    public GameObject PictureManagerx;
+    public GameObject PictureManagerx, CameraFlash;
     public InventoryManager InventoryManager;
     private InputSystem_Actions PlayerInput;
     private bool TakingPicture = false;
+    private bool IsFlashing = false;
+
+    private bool FlashActive = true;
+
+    [SerializeField]
+    private float FlashTime = 0.25f, PictureTime = 1.5f;
+
+
+    [SerializeField]
+    private int PicturesPerReel = 8;
+
+    private int PicturesLeft = 0;
+    private int ReelsLeft = 0;
+
+    [SerializeField]
+    private TextMeshProUGUI PicturesLeftText;
+
+    [SerializeField]
+    private TextMeshProUGUI ReelsLeftText;
+
 
     private void Awake()
     {
@@ -20,19 +41,32 @@ public class PolaroidCamera : MonoBehaviour
         PlayerInput = new InputSystem_Actions();
         PlayerInput.Enable();
         PlayerInput.Player.TakePicture.performed += TakePicture;
+        PlayerInput.Player.LoadReel.performed += LoadNewReel;
         InventoryManager = GameObject.Find("UICamera").GetComponent<InventoryManager>();
+        CameraFlash.GetComponent<Light>().enabled = false;
+        PicturesLeft = PicturesPerReel;
+        UpdateLeftsTexts();
     }
 
     public void TakePicture(InputAction.CallbackContext context)
     {
-        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture || InventoryManager.IsInventoryShowing()) return;
+        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing()) return;
 
+        if (PicturesLeft <= 0)
+        {
+            return;
+        }
 
         // Activa la cámara Polaroid (si está desactivada)
         polaroidCamera.enabled = true;
 
         //Activamos cooldown
-        StartCoroutine(ExecuteAfterTime(1.5f));
+        StartCoroutine(ExecuteAfterTime(PictureTime));
+
+        if (FlashActive)
+        {
+            StartCoroutine(Flashing(FlashTime));
+        }
 
         // Captura la imagen como una textura
         Texture2D photoTexture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
@@ -75,6 +109,9 @@ public class PolaroidCamera : MonoBehaviour
 
         // Desactiva la cámara después de capturar la imagen
         polaroidCamera.enabled = false;
+
+        PicturesLeft--;
+        UpdateLeftsTexts();
     }
 
     IEnumerator ExecuteAfterTime(float time)
@@ -91,10 +128,65 @@ public class PolaroidCamera : MonoBehaviour
         TakingPicture = false;
     }
 
+    IEnumerator Flashing(float time)
+    {
+        if (IsFlashing)
+        {
+            yield break;
+        }
+
+        IsFlashing = true;
+        CameraFlash.GetComponent<Light>().enabled = true;
+
+        yield return new WaitForSeconds(time);
+
+        CameraFlash.GetComponent<Light>().enabled = false;
+        IsFlashing = false;
+    }
+
 
     public bool IsTakingPicture()
     {
         return TakingPicture;
+    }
+
+    public void ActivateOrDeactivateFlash()
+    {
+        FlashActive = !FlashActive;
+    }
+
+    public void AddReelAmount(int Amount)
+    {
+        ReelsLeft += Amount;
+        UpdateLeftsTexts();
+    }
+
+    public void RemoveReelAmount(int Amount) 
+    {
+        ReelsLeft -= Amount;
+        UpdateLeftsTexts();
+    }
+
+    private void LoadNewReel(InputAction.CallbackContext context)
+    {
+        if ((ReelsLeft <= 0 || PicturesLeft > 0) || (TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing()))
+        {
+            return;
+        }
+        ReelsLeft -= 1;
+        PicturesLeft = PicturesPerReel;
+        UpdateLeftsTexts();
+    }
+
+    private void UpdateLeftsTexts()
+    {
+        PicturesLeftText.text = PicturesLeft.ToString() + " Pictures left";
+        ReelsLeftText.text = ReelsLeft.ToString() + " Reels left";
+    }
+
+    public bool OutOfPictures()
+    {
+        return (PicturesLeft <= 0 && ReelsLeft >= 0);
     }
 
     //private void OnTriggerEnter(Collider other)

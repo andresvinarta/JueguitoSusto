@@ -9,6 +9,7 @@ TagManager:
   - Picture
   - Door
   - Key
+  - Reel
   layers:
   - Default
   - TransparentFX

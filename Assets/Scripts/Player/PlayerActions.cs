@@ -36,7 +36,7 @@ public class PlayerActions : MonoBehaviour
         Ray InteractRay = new Ray(PlayerMainCam.transform.position, PlayerMainCam.transform.forward);
         if (Physics.Raycast(InteractRay, out RaycastHit Hit, InteractDistance, InteractLayerMask))
         {
-            if (Hit.transform.tag == "ObjectItem" || Hit.transform.tag == "NoteItem" || Hit.transform.tag == "Key")
+            if (Hit.transform.tag == "ObjectItem" || Hit.transform.tag == "NoteItem" || Hit.transform.tag == "Key" || Hit.transform.tag == "Reel")
             {
                 InteractPrompt.gameObject.SetActive(true);
                 InteractPrompt.text = "Press " + PlayerInput.Player.Interact.bindings.FirstOrDefault().ToDisplayString() + " to pick up";
@@ -86,6 +86,10 @@ public class PlayerActions : MonoBehaviour
             else if (Hit.transform.tag == "NoteItem")
             {
                 Hit.transform.gameObject.GetComponent<NoteItem>().PickUp();
+            }
+            else if (Hit.transform.tag == "Reel")
+            {
+                Hit.transform.gameObject.GetComponent<CameraReel>().PickUp();
             }
             else if (Hit.transform.tag == "Door")
             {
