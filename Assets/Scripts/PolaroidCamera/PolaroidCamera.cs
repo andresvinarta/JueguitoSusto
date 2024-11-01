@@ -34,18 +34,69 @@ public class PolaroidCamera : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI ReelsLeftText;
 
+    [SerializeField]
+    private GameObject PolaroidPreviewCanvas;
+
+    private bool InPreview = false, MovingCam = false, FadingIn = false;
+
+    [SerializeField]
+    private GameObject CameraModel, OffViewPosition;
+
+    private Vector3 CameraOriginalPos;
+    private Quaternion CameraOriginalRotation;
+
+    private float CameraPosThreshold = 0.005f, VelToOffsetPos = 15f, VelToOffsetRot = 500f, FadeInRate = 7.5f, FadeInTreshold = 0.025f;
 
     private void Awake()
     {
+        CameraOriginalPos = CameraModel.transform.localPosition;
+        CameraOriginalRotation = CameraModel.transform.localRotation;
         polaroidCamera.enabled = false;
         PlayerInput = new InputSystem_Actions();
         PlayerInput.Enable();
+        PlayerInput.Player.PolaroidPreview.started += CameraToOffView;
+        PlayerInput.Player.PolaroidPreview.canceled += HidePreview;
         PlayerInput.Player.TakePicture.performed += TakePicture;
         PlayerInput.Player.LoadReel.performed += LoadNewReel;
         InventoryManager = GameObject.Find("UICamera").GetComponent<InventoryManager>();
         CameraFlash.GetComponent<Light>().enabled = false;
         PicturesLeft = PicturesPerReel;
         UpdateLeftsTexts();
+    }
+
+    private void Update()
+    {
+        if (MovingCam)
+        {
+            if (Vector3.Distance(CameraModel.transform.localPosition, OffViewPosition.transform.localPosition) > CameraPosThreshold && !InPreview)
+            {
+                CameraModel.transform.localPosition = Vector3.Lerp(CameraModel.transform.localPosition, OffViewPosition.transform.localPosition, VelToOffsetPos * Time.deltaTime);
+                CameraModel.transform.localRotation = Quaternion.Lerp(CameraModel.transform.localRotation, OffViewPosition.transform.localRotation, VelToOffsetRot * Time.deltaTime);
+            }
+
+            if (Vector3.Distance(CameraModel.transform.localPosition, OffViewPosition.transform.localPosition) < FadeInTreshold && !InPreview)
+            {
+                FadingIn = true;
+            }
+
+            if (FadingIn && !InPreview)
+            {
+                PolaroidPreviewCanvas.GetComponent<CanvasGroup>().alpha += Mathf.Lerp(0, 1, FadeInRate * Time.deltaTime);
+            }
+
+            if (PolaroidPreviewCanvas.GetComponent<CanvasGroup>().alpha >= 1 && !InPreview)
+            {
+                ShowPreview();
+            }
+        }
+        else
+        { 
+            if (Vector3.Distance(CameraOriginalPos, CameraModel.transform.localPosition) > CameraPosThreshold)
+            {
+                CameraModel.transform.localPosition = Vector3.Lerp(CameraModel.transform.localPosition, CameraOriginalPos, VelToOffsetPos * Time.deltaTime);
+                CameraModel.transform.localRotation = Quaternion.Lerp(CameraModel.transform.localRotation, CameraOriginalRotation, VelToOffsetRot * Time.deltaTime);
+            }
+        }
     }
 
     public void TakePicture(InputAction.CallbackContext context)
@@ -112,6 +163,31 @@ public class PolaroidCamera : MonoBehaviour
 
         PicturesLeft--;
         UpdateLeftsTexts();
+    }
+
+
+    public void CameraToOffView(InputAction.CallbackContext context)
+    {
+        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing()) return;
+        MovingCam = true;
+    }
+
+    public void ShowPreview()
+    {
+        FadingIn = false;
+        InPreview = true;
+    }
+
+    public void HidePreview(InputAction.CallbackContext context)
+    {
+        PolaroidPreviewCanvas.GetComponent<CanvasGroup>().alpha = 0f;
+        InPreview = false;
+        MovingCam = false;
+    }
+
+    public bool IsInPreview()
+    {
+        return InPreview;
     }
 
     IEnumerator ExecuteAfterTime(float time)

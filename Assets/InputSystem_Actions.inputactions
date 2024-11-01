@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PolaroidPreview",
+                    "type": "Button",
+                    "id": "03eb18aa-3e3f-441c-8a14-465788ecd5e8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -437,7 +446,7 @@
                 {
                     "name": "",
                     "id": "41a6238b-f515-48b9-ade7-71f258f79936",
-                    "path": "<Keyboard>/space",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -459,7 +468,7 @@
                 {
                     "name": "",
                     "id": "e5c023ce-85c8-4e73-b246-d2035cddba15",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -547,7 +556,7 @@
                 {
                     "name": "",
                     "id": "ab1c92f9-1d58-4f75-b022-a4bafb63b724",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -563,6 +572,17 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "CheckPictures",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35808cd1-3b05-4522-809d-ee1e28d57843",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PolaroidPreview",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

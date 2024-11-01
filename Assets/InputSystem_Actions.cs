@@ -134,6 +134,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PolaroidPreview"",
+                    ""type"": ""Button"",
+                    ""id"": ""03eb18aa-3e3f-441c-8a14-465788ecd5e8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -459,7 +468,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""41a6238b-f515-48b9-ade7-71f258f79936"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -481,7 +490,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e5c023ce-85c8-4e73-b246-d2035cddba15"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -569,7 +578,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ab1c92f9-1d58-4f75-b022-a4bafb63b724"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -585,6 +594,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""CheckPictures"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35808cd1-3b05-4522-809d-ee1e28d57843"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PolaroidPreview"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1184,6 +1204,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_CheckPictures = m_Player.FindAction("CheckPictures", throwIfNotFound: true);
+        m_Player_PolaroidPreview = m_Player.FindAction("PolaroidPreview", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1275,6 +1296,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_CheckPictures;
+    private readonly InputAction m_Player_PolaroidPreview;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1291,6 +1313,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @CheckPictures => m_Wrapper.m_Player_CheckPictures;
+        public InputAction @PolaroidPreview => m_Wrapper.m_Player_PolaroidPreview;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1336,6 +1359,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CheckPictures.started += instance.OnCheckPictures;
             @CheckPictures.performed += instance.OnCheckPictures;
             @CheckPictures.canceled += instance.OnCheckPictures;
+            @PolaroidPreview.started += instance.OnPolaroidPreview;
+            @PolaroidPreview.performed += instance.OnPolaroidPreview;
+            @PolaroidPreview.canceled += instance.OnPolaroidPreview;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1376,6 +1402,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CheckPictures.started -= instance.OnCheckPictures;
             @CheckPictures.performed -= instance.OnCheckPictures;
             @CheckPictures.canceled -= instance.OnCheckPictures;
+            @PolaroidPreview.started -= instance.OnPolaroidPreview;
+            @PolaroidPreview.performed -= instance.OnPolaroidPreview;
+            @PolaroidPreview.canceled -= instance.OnPolaroidPreview;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1570,6 +1599,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnCheckPictures(InputAction.CallbackContext context);
+        void OnPolaroidPreview(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
