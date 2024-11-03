@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEditor.Progress;
+using System;
 
 public class ItemRenderer : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -17,6 +19,16 @@ public class ItemRenderer : MonoBehaviour, IPointerDownHandler, IDragHandler, IP
 
     // Última posición del ratón
     private Vector2 lastMousePosition;
+
+    [SerializeField]
+    private GameObject PictureJumpscareManager;
+
+    private AudioSource[] PictureJumpscares;
+
+    private void Awake()
+    {
+        PictureJumpscares = PictureJumpscareManager.GetComponents<AudioSource>();
+    }
 
     public void NewItemToRender(GameObject NewItem)
     {
@@ -41,6 +53,15 @@ public class ItemRenderer : MonoBehaviour, IPointerDownHandler, IDragHandler, IP
             foreach (Transform ItemTransform in Transforms)
             {
                 ItemTransform.gameObject.layer = LayerMask.NameToLayer("ItemRenderUI");
+            }
+        }
+        else if (NewItem.tag == "Picture")
+        {
+            if (NewItem.GetComponent<PictureItem>().DoesItHaveJumpScare())
+            {
+                int RandomNumber = UnityEngine.Random.Range((int)0, (int)PictureJumpscares.Length);
+                PictureJumpscares[RandomNumber].Play();
+                NewItem.GetComponent<PictureItem>().DisableJumpscare();
             }
         }
         ItemRendering.SetActive(true);

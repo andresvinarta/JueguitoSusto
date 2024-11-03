@@ -47,6 +47,8 @@ public class PolaroidCamera : MonoBehaviour
 
     private float CameraPosThreshold = 0.005f, VelToOffsetPos = 15f, VelToOffsetRot = 500f, FadeInRate = 7.5f, FadeInTreshold = 0.025f;
 
+    private bool JumpscareInPicture = false;
+
     private void Awake()
     {
         CameraOriginalPos = CameraModel.transform.localPosition;
@@ -152,6 +154,11 @@ public class PolaroidCamera : MonoBehaviour
         //printedPhoto.transform.rotation = Quaternion.Euler(90, 180, 0);
         //printedPhoto.transform.Rotate(new Vector3(0, 180, 0));
         //printedPhoto.transform.Rotate(new Vector3(90, 0, 0));
+
+        if (JumpscareInPicture)
+        {
+            printedPhoto.GetComponent<PictureItem>().SetJumpscare();
+        }
 
         //Desactivamos el objeto
         printedPhoto.SetActive(false);
@@ -263,6 +270,11 @@ public class PolaroidCamera : MonoBehaviour
     public bool OutOfPictures()
     {
         return (PicturesLeft <= 0 && ReelsLeft >= 0);
+    }
+
+    public void JumpscareUpdate(bool NewValue)
+    {
+        JumpscareInPicture = NewValue;
     }
 
     //private void OnTriggerEnter(Collider other)

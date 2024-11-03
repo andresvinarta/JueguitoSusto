@@ -43,4 +43,14 @@ public class PictureItem : MonoBehaviour
     {
         return HasJumpScare;
     }
+
+    public void SetJumpscare()
+    {
+        HasJumpScare = true;
+    }
+
+    public void DisableJumpscare()
+    {
+        HasJumpScare = false;
+    }
 }
