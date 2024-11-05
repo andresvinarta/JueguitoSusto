@@ -4583,6 +4583,7 @@ GameObject:
   - component: {fileID: 5224525620536767650}
   - component: {fileID: 7673772449034108441}
   - component: {fileID: 5686316230129354592}
+  - component: {fileID: 6324558488267661622}
   m_Layer: 7
   m_Name: ItemRenderCamera
   m_TagString: Untagged
@@ -4700,6 +4701,19 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &6324558488267661622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7287218469939250352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93d74b0c28067d458e1a93e0b5b6e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraName: ItemRenderCamera
 --- !u!1 &7973919838242081928
 GameObject:
   m_ObjectHideFlags: 0
