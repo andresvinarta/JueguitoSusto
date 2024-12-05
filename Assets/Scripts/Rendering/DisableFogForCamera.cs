@@ -31,7 +31,7 @@ public class DisableFogForCamera : MonoBehaviour
 
         if (camera.gameObject.name == CameraName)
         {
-            Debug.Log("Turn fog off");
+            //Debug.Log("Turn fog off");
             RenderSettings.fog = false;
         }
 

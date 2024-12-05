@@ -121,6 +121,9 @@ public class PolaroidCamera : MonoBehaviour
             StartCoroutine(Flashing(FlashTime));
         }
 
+        //Sonido de foto
+        this.gameObject.GetComponents<AudioSource>()[0].Play();
+
         // Captura la imagen como una textura
         Texture2D photoTexture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
         RenderTexture.active = renderTexture;

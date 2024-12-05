@@ -10,6 +10,9 @@ TagManager:
   - Door
   - Key
   - Reel
+  - DirtGround
+  - WoodGround
+  - ConcreteGround
   layers:
   - Default
   - TransparentFX
