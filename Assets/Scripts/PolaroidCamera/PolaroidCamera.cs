@@ -12,6 +12,7 @@ public class PolaroidCamera : MonoBehaviour
     GameObject printedPhoto;
     public GameObject PictureManagerx, CameraFlash;
     public InventoryManager InventoryManager;
+    public PauseMenuManager PauseMenu;
     private InputSystem_Actions PlayerInput;
     private bool TakingPicture = false;
     private bool IsFlashing = false;
@@ -103,7 +104,7 @@ public class PolaroidCamera : MonoBehaviour
 
     public void TakePicture(InputAction.CallbackContext context)
     {
-        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing()) return;
+        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing() || PauseMenu.IsPauseMenuActive()) return;
 
         if (PicturesLeft <= 0)
         {

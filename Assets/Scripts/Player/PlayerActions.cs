@@ -6,7 +6,7 @@ using System.Linq;
 public class PlayerActions : MonoBehaviour
 {
     private InputSystem_Actions PlayerInput;
-    public GameObject PictureManagerCam, PolaroidCamera, InventoryManager, PlayerMainCam;
+    public GameObject PictureManagerCam, PolaroidCamera, InventoryManager, PlayerMainCam, PauseMenu;
 
     public TextMeshProUGUI InteractPrompt;
 
@@ -25,6 +25,7 @@ public class PlayerActions : MonoBehaviour
         //PlayerInput.Player.CheckPictures.performed += CheckPictures;
         PlayerInput.Player.CheckPictures.performed += OpenInventory;
         PlayerInput.Player.Interact.performed += Interact;
+        PlayerInput.Player.Pause.performed += PauseGame;
         foreach (LayerMask Layer in LayerMasks)
         {
             InteractLayerMask = InteractLayerMask | Layer;
@@ -136,13 +137,25 @@ public class PlayerActions : MonoBehaviour
 
     public void OpenInventory(InputAction.CallbackContext callbackContext)
     {
-        if (!InventoryManager.GetComponent<InventoryManager>().IsInventoryShowing())
+        if (!InventoryManager.GetComponent<InventoryManager>().IsInventoryShowing() && !PauseMenu.GetComponent<PauseMenuManager>().IsPauseMenuActive() && !PolaroidCamera.GetComponent<PolaroidCamera>().IsTakingPicture())
         {
             InventoryManager.GetComponent<InventoryManager>().OpenInventory();
         }
         else
         {
             InventoryManager.GetComponent<InventoryManager>().CloseInventory();
+        }
+    }
+
+    public void PauseGame(InputAction.CallbackContext callbackContext)
+    {
+        if (!PauseMenu.GetComponent<PauseMenuManager>().IsPauseMenuActive() && !InventoryManager.GetComponent<InventoryManager>().IsInventoryShowing())
+        {
+            PauseMenu.GetComponent<PauseMenuManager>().OpenPauseMenu();
+        }
+        else
+        {
+            PauseMenu.GetComponent<PauseMenuManager>().ClosePauseMenu();
         }
     }
 }
