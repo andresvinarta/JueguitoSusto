@@ -9235,7 +9235,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 566d6cce82c4f5940be20d3221b1953c, type: 3}
   m_Resource: {fileID: 8300000, guid: 566d6cce82c4f5940be20d3221b1953c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -9332,9 +9332,9 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: df2ebf113487113458a35c2f35be8bdc, type: 3}
   m_Resource: {fileID: 8300000, guid: df2ebf113487113458a35c2f35be8bdc, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -22388,6 +22388,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1604592215736747749}
     - target: {fileID: 923258018764703699, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
+      propertyPath: Frequency
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 923258018764703699, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
       propertyPath: DirtStepSounds
       value: 
       objectReference: {fileID: 2354182735099549900}
@@ -22442,6 +22446,34 @@ PrefabInstance:
     - target: {fileID: 4891865355550650621, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
       propertyPath: m_Name
       value: PolaroidCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978725604348451811, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
+      propertyPath: m_AdditionalLightsShadowResolutionTier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697524297725017070, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697524297725017070, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
+      propertyPath: m_Range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697524297725017070, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
+      propertyPath: m_Intensity
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697524297725017070, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
+      propertyPath: m_SpotAngle
+      value: 107.099
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697524297725017070, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 84.52546
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697524297725017070, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8440325139088281619, guid: cd3d4d71e80d26b4e82722330861ae46, type: 3}
       propertyPath: m_LocalPosition.x

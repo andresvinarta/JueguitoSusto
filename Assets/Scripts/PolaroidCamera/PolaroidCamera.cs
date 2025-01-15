@@ -49,6 +49,7 @@ public class PolaroidCamera : MonoBehaviour
     private float CameraPosThreshold = 0.005f, VelToOffsetPos = 15f, VelToOffsetRot = 500f, FadeInRate = 7.5f, FadeInTreshold = 0.025f;
 
     private bool JumpscareInPicture = false;
+    private PictureJumpscareDetection JumpscareOrigin;
 
     private void Awake()
     {
@@ -162,6 +163,11 @@ public class PolaroidCamera : MonoBehaviour
         if (JumpscareInPicture)
         {
             printedPhoto.GetComponent<PictureItem>().SetJumpscare();
+            JumpscareInPicture = false;
+            if (JumpscareOrigin != null)
+            {
+                JumpscareOrigin.DestroyAfterPicture();
+            }
         }
 
         //Desactivamos el objeto
@@ -276,9 +282,16 @@ public class PolaroidCamera : MonoBehaviour
         return (PicturesLeft <= 0 && ReelsLeft >= 0);
     }
 
-    public void JumpscareUpdate(bool NewValue)
+    public void ActivateJumpscare(PictureJumpscareDetection NewJumpscareOrigin)
     {
-        JumpscareInPicture = NewValue;
+        JumpscareInPicture = true;
+        JumpscareOrigin = NewJumpscareOrigin;
+    }
+
+    public void DeactivateJumpscare()
+    {
+        JumpscareInPicture = false;
+        JumpscareOrigin = null;
     }
 
     //private void OnTriggerEnter(Collider other)
