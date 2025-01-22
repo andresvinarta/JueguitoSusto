@@ -1,0 +1,14 @@
+{
+  "name": "com.andresvinarta.referencefinder",
+  "version": "1.0.0",
+  "displayName": "Reference Finder",
+  "description": "A simple tool to easily find all references to a GameObject or its components in a scene.",
+  "unity": "2021.3",
+  "author": {
+    "name": "Andrés Viñarta",
+    "email": "andresvinarta@gmail.com",
+    "url": "https://github.com/andresvinarta"
+  },
+  "keywords": ["references", "gameobject", "unity"],
+  "category": "Editor Tools"
+}

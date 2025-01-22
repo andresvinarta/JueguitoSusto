@@ -13,7 +13,7 @@ public class PlayerCamera : MonoBehaviour
 
     private InputSystem_Actions PlayerInput;
 
-    public GameObject PictureManagerCam, InventoryManager, PauseMenu;
+    public GameObject InventoryManager, PauseMenu;
 
     private void Start()
     {
@@ -32,7 +32,7 @@ public class PlayerCamera : MonoBehaviour
     {
         // Rotar la cámara
         lookInput = PlayerInput.Player.Look.ReadValue<Vector2>();
-        if (!PictureManagerCam.GetComponent<PictureManager>().IsShowing() && !InventoryManager.GetComponent<InventoryManager>().IsInventoryShowing() && !PauseMenu.GetComponent<PauseMenuManager>().IsPauseMenuActive())
+        if (!InventoryManager.GetComponent<InventoryManager>().IsInventoryShowing() && !PauseMenu.GetComponent<PauseMenuManager>().IsPauseMenuActive())
         {
             RotateCamera();
         }

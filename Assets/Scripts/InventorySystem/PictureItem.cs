@@ -16,7 +16,7 @@ public class PictureItem : MonoBehaviour
 
     public void Awake()
     {
-        InventoryManager = GameObject.Find("UICamera").GetComponent<InventoryManager>();
+        InventoryManager = GameObject.Find("UI").GetComponent<InventoryManager>();
     }
 
     public void PickUp()

@@ -10,7 +10,7 @@ public class PolaroidCamera : MonoBehaviour
     public GameObject photoPrefab; // Prefab que representa la foto impresa en el mundo del juego
     public Transform spawnPoint; // Punto donde aparecerá la foto "impresa"
     GameObject printedPhoto;
-    public GameObject PictureManagerx, CameraFlash;
+    public GameObject CameraFlash;
     public InventoryManager InventoryManager;
     public PauseMenuManager PauseMenu;
     private InputSystem_Actions PlayerInput;
@@ -51,7 +51,7 @@ public class PolaroidCamera : MonoBehaviour
     private bool JumpscareInPicture = false;
     private PictureJumpscareDetection JumpscareOrigin;
 
-    private void Awake()
+    void Awake()
     {
         CameraOriginalPos = CameraModel.transform.localPosition;
         CameraOriginalRotation = CameraModel.transform.localRotation;
@@ -62,14 +62,17 @@ public class PolaroidCamera : MonoBehaviour
         PlayerInput.Player.PolaroidPreview.canceled += HidePreview;
         PlayerInput.Player.TakePicture.performed += TakePicture;
         PlayerInput.Player.LoadReel.performed += LoadNewReel;
-        InventoryManager = GameObject.Find("UICamera").GetComponent<InventoryManager>();
+        InventoryManager = GameObject.Find("UI").GetComponent<InventoryManager>();
+        CameraFlash.GetComponent<Light>().enabled = false;
+        CameraFlash.GetComponent<Light>().enabled = true;
         CameraFlash.GetComponent<Light>().enabled = false;
         PicturesLeft = PicturesPerReel;
         UpdateLeftsTexts();
     }
 
-    private void Update()
+    void Update()
     {
+        Debug.Log("AAAAAAAAAAA");
         if (MovingCam)
         {
             if (Vector3.Distance(CameraModel.transform.localPosition, OffViewPosition.transform.localPosition) > CameraPosThreshold && !InPreview)
@@ -105,7 +108,7 @@ public class PolaroidCamera : MonoBehaviour
 
     public void TakePicture(InputAction.CallbackContext context)
     {
-        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing() || PauseMenu.IsPauseMenuActive()) return;
+        if (TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing() || PauseMenu.IsPauseMenuActive()) return;
 
         if (PicturesLeft <= 0)
         {
@@ -185,7 +188,7 @@ public class PolaroidCamera : MonoBehaviour
 
     public void CameraToOffView(InputAction.CallbackContext context)
     {
-        if (PictureManagerx.GetComponent<PictureManager>().IsShowing() || TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing()) return;
+        if (TakingPicture || IsFlashing || InventoryManager.IsInventoryShowing()) return;
         MovingCam = true;
     }
 

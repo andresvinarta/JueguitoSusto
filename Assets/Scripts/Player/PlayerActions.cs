@@ -6,7 +6,7 @@ using System.Linq;
 public class PlayerActions : MonoBehaviour
 {
     private InputSystem_Actions PlayerInput;
-    public GameObject PictureManagerCam, PolaroidCamera, InventoryManager, PlayerMainCam, PauseMenu;
+    public GameObject PolaroidCamera, InventoryManager, PlayerMainCam, PauseMenu;
 
     public TextMeshProUGUI InteractPrompt;
 
@@ -116,21 +116,6 @@ public class PlayerActions : MonoBehaviour
                         Hit.transform.gameObject.GetComponent<Door>().OpenDoor();
                     }
                 }
-            }
-        }
-    }
-
-    public void CheckPictures(InputAction.CallbackContext callbackContext)
-    {
-        if (PictureManagerCam.GetComponent<PictureManager>().ThereArePictures() && !PolaroidCamera.GetComponent<PolaroidCamera>().IsTakingPicture())
-        {
-            if (!PictureManagerCam.GetComponent<PictureManager>().IsShowing())
-            {
-                PictureManagerCam.GetComponent<PictureManager>().SetUp();
-            }
-            else
-            {
-                PictureManagerCam.GetComponent<PictureManager>().CloseUp();
             }
         }
     }

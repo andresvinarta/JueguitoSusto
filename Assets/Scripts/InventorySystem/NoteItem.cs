@@ -17,7 +17,7 @@ public class NoteItem : MonoBehaviour
 
     public void Start()
     {
-        InventoryManager = GameObject.Find("UICamera").GetComponent<InventoryManager>();
+        InventoryManager = GameObject.Find("UI").GetComponent<InventoryManager>();
     }
 
     public void PickUp()
