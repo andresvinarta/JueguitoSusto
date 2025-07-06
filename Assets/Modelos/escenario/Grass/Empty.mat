@@ -248,7 +248,7 @@ Material:
     - _Blend: 0
     - _BlendMode: 0
     - _BlendModePreserveSpecular: 1
-    - _Branch_Move: 0
+    - _Branch_Move: -0.021
     - _Branch_Stiffness: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -302,8 +302,8 @@ Material:
     - _Ior: 1.5
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
-    - _Leaf_Frequency: 0.1
-    - _Leaf_Speed: 0.1
+    - _Leaf_Frequency: 1
+    - _Leaf_Speed: 0
     - _Leaf_Wave: 0
     - _LinkDetailsWithBase: 1
     - _MaterialID: 0
@@ -377,7 +377,7 @@ Material:
     - _UseShadowThreshold: 0
     - _WIND: 1
     - _WindQuality: 0
-    - _Wind_Bend: 0
+    - _Wind_Bend: 20
     - _Wind_Offset: 0
     - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 3
