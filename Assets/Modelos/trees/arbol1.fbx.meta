@@ -14,6 +14,26 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: ramas
     second: {fileID: 2100000, guid: 326d6fac094aba64e8aef8ce375527c8, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Bark014_2K-PNG_Color
+    second: {fileID: 2800000, guid: b8220fde0c44916418043653bff223ed, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Bark014_2K-PNG_NormalGL
+    second: {fileID: 2800000, guid: 549a6af3241a4df4293311c97997cf52, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Bark014_2K-PNG_Roughness
+    second: {fileID: 2800000, guid: b58ea2ff0c313324b808ba157ddd5762, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: hojas
+    second: {fileID: 2800000, guid: 333847936f560b04d9ec7183d16f423e, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
